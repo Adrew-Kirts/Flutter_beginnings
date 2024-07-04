@@ -1,9 +1,11 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:test_drive/profile_page.dart';
 import 'package:test_drive/social_page.dart';
 import 'favorites_page.dart';
 import 'layout_exo.dart';
+import 'helpers/navigatorHelper.dart';
 
 void main() {
   runApp(MyApp());
@@ -56,6 +58,17 @@ class MyHomePage extends StatelessWidget {
     var pair = appState.current;
 
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.blue,
+          title: Text('My great app',
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              )),
+          toolbarHeight: 60.0,
+        ),
         body: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -103,28 +116,44 @@ class MyHomePage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 80),
+          SizedBox(height: 20),
+          Divider(
+            color: Colors.grey.shade400,
+            thickness: 1,
+            indent: 15,
+            endIndent: 15,
+          ),
+          SizedBox(height: 50),
           ElevatedButton(onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) =>
-                    LayoutExoPage(),
-              ),
-            );
-          }, child: Text('Layout Page')),
+            NavigatorHelper().toSpecificPage(
+                context: context, page: LayoutExoPage());
+          }, child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.draw),
+              Text('Layout Page'),
+            ],
+          )),
           SizedBox(height: 20),
           ElevatedButton(onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) =>
-                    SocialPage(),
-              ),
-            );
+            NavigatorHelper().toSpecificPage(
+                context: context, page: SocialPage());
           }, child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
             Icon(Icons.person),
-            Text(' Social Page')
+            Text(' Static Social Page')
+          ]),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(onPressed: () {
+            NavigatorHelper().toSpecificPage(
+                context: context, page: ProfilePage());
+          }, child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+            Icon(Icons.person),
+            Text(' Dynamic Profile Page')
           ]),
           ),
         ],
